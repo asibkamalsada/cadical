@@ -1,0 +1,10 @@
+//
+// Created by asib1 on 08.03.2021.
+//
+
+#ifndef CADICAL_MULTISOLUTIONS_HPP
+#define CADICAL_MULTISOLUTIONS_HPP
+
+
+
+#endif //CADICAL_MULTISOLUTIONS_HPP
