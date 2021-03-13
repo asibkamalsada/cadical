@@ -195,6 +195,7 @@ int main(__unused int argc, char *argv[]) {
                 }
             }
         }
+        if (first_out) cout << '"';
         cout << "\"\n";
         for (int signed_lit : sol_buff) {
             solver->add(-signed_lit);

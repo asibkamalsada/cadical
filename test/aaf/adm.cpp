@@ -12,6 +12,18 @@
 
 using namespace std;
 
+#define DEBUG 0
+
+#define LOG(S) if (DEBUG) cout << S
+
+#define ADD(X) LOG(X); solver->add(X)
+
+#define SPACE LOG(' ')
+#define NL LOG('\n')
+
+#define ADD_S(X) ADD(X); SPACE
+#define TERM_CL ADD(0); NL
+
 int main(__unused int argc, char *argv[]) {
     auto *solver = new CaDiCaL::Solver;
 
@@ -67,8 +79,9 @@ int main(__unused int argc, char *argv[]) {
                             for (int i = 0; i < argcount; i++) {
                                 pre[i] = new int[argcount];
                             }
+                            LOG("conflictfree\n");
                         }
-
+                        // conflictfree
                         int lit1;
                         int lit2;
                         fin >> noskipws >> ch;
@@ -80,7 +93,7 @@ int main(__unused int argc, char *argv[]) {
                             counter++;
                         }
                         lit1 = arg2lit[std::string(b, counter)];
-                        solver->add(-lit1);
+                        ADD_S(-lit1);
                         fin >> noskipws >> ch;
                         counter = 0;
                         while (ch != ')') {
@@ -90,9 +103,8 @@ int main(__unused int argc, char *argv[]) {
                             counter++;
                         }
                         lit2 = arg2lit[std::string(b, counter)];
-                        solver->add(-lit2);
-                        solver->add(0);
-
+                        ADD_S(-lit2);
+                        TERM_CL;
                         pre[lit2 - 1][pre_counts[lit2 - 1]] = lit1;
                         pre_counts[lit2 - 1]++;
 
@@ -102,24 +114,27 @@ int main(__unused int argc, char *argv[]) {
         }
     }
 
+#define ATT pre[i][pre_count]
+#define ATT_I ATT - 1
+
     for (int i = 0; i < argcount; i++) {
-        if (pre_counts[i]) {
-            for (size_t pre_count = 0; pre_count < pre_counts[i]; pre_count++) {
-#               define ATT_I pre[i][pre_count] - 1
-                for (size_t pre_pre_count = 0; pre_pre_count < pre_counts[ATT_I]; pre_pre_count++) {
-                    solver->add(pre[ATT_I][pre_pre_count]);
-                }
-                solver->add(-(i + 1));
-                solver->add(0);
+#       define loop_lit (i + 1)
+        // admissible
+        for (size_t pre_count = 0; pre_count < pre_counts[i]; pre_count++) {
+            LOG("adm ");
+            for (size_t pre_pre_count = 0; pre_pre_count < pre_counts[ATT_I]; pre_pre_count++) {
+                ADD_S(pre[ATT_I][pre_pre_count]);
             }
+            ADD_S(- (loop_lit));
+            TERM_CL;
         }
     }
-
+#if DEBUG
     for (const auto &a : arg2lit) {
         cout << a.first << " " << a.second << '\n';
     }
-
     cout << argcount << '\n';
+#endif
 
     int sol_buff[argcount];
 
@@ -131,10 +146,11 @@ int main(__unused int argc, char *argv[]) {
                     cout << '"' << lit2arg[lit];
                     first_out = false;
                 } else {
-                    cout << " " << lit2arg[lit];
+                    cout << ' ' << lit2arg[lit];
                 }
             }
         }
+        if (first_out) cout << '"';
         cout << "\"\n";
         for (int signed_lit : sol_buff) {
             solver->add(-signed_lit);
