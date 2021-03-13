@@ -26,6 +26,7 @@ using namespace std;
 
 int main(__unused int argc, char *argv[]) {
     auto *solver = new CaDiCaL::Solver;
+    solver->set("quiet", 1);
 
     unordered_map<std::string, int> arg2lit;
     unordered_map<int, std::string> lit2arg;

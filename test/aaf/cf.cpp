@@ -13,6 +13,7 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
     auto *solver = new CaDiCaL::Solver;
+    solver->set("quiet", 1);
 
     unordered_map<std::string, size_t> arg2lit;
     unordered_map<size_t, std::string> lit2arg;
