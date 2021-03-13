@@ -15,8 +15,8 @@ int main(int argc, char *argv[]) {
     auto *solver = new CaDiCaL::Solver;
     solver->set("quiet", 1);
 
-    unordered_map<std::string, size_t> arg2lit;
-    unordered_map<size_t, std::string> lit2arg;
+    unordered_map<std::string, int> arg2lit;
+    unordered_map<int, std::string> lit2arg;
 
 #define B_SIZE 20
 
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     char ch;
     fstream fin(argv[1], fstream::in);
 
-    size_t argcount = 0;
+    int argcount = 0;
 
     while (fin >> noskipws >> ch) {
         if (ch == 'a') {

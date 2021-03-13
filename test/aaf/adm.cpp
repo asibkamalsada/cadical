@@ -42,7 +42,7 @@ int main(__unused int argc, char *argv[]) {
 
     bool args_finished = false;
 
-    size_t *pre_counts;
+    int *pre_counts;
 
     unordered_map<int, int *> pre;
 
@@ -75,8 +75,7 @@ int main(__unused int argc, char *argv[]) {
                     if (ch == '(') {
                         if (!args_finished) {
                             args_finished = true;
-                            pre_counts = new size_t[argcount];
-                            memset(pre_counts, 0, argcount);
+                            pre_counts = (int *) calloc(argcount, sizeof(int));
                             for (int i = 0; i < argcount; i++) {
                                 pre[i] = new int[argcount];
                             }
@@ -121,9 +120,9 @@ int main(__unused int argc, char *argv[]) {
     for (int i = 0; i < argcount; i++) {
 #       define loop_lit (i + 1)
         // admissible
-        for (size_t pre_count = 0; pre_count < pre_counts[i]; pre_count++) {
+        for (int pre_count = 0; pre_count < pre_counts[i]; pre_count++) {
             LOG("adm ");
-            for (size_t pre_pre_count = 0; pre_pre_count < pre_counts[ATT_I]; pre_pre_count++) {
+            for (int pre_pre_count = 0; pre_pre_count < pre_counts[ATT_I]; pre_pre_count++) {
                 ADD_S(pre[ATT_I][pre_pre_count]);
             }
             ADD_S(- (loop_lit));
