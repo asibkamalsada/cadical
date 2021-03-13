@@ -205,5 +205,11 @@ int main(__unused int argc, char *argv[]) {
 
     delete solver;
 
+    for (const auto &a : pre) {
+        delete a.second;
+    }
+
+    delete pre_counts;
+
     return 0;
 }
