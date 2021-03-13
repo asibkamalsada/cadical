@@ -7,11 +7,10 @@
 #include <fstream>
 #include <iostream>
 #include <unordered_map>
-#include <cstring>
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+int main(__unused int argc, char *argv[]) {
     auto *solver = new CaDiCaL::Solver;
     solver->set("quiet", 1);
 

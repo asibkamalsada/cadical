@@ -8,7 +8,6 @@
 #include <fstream>
 #include <iostream>
 #include <unordered_map>
-#include <cstring>
 
 using namespace std;
 
@@ -128,7 +127,7 @@ int main(__unused int argc, char *argv[]) {
             for (int pre_pre_count = 0; pre_pre_count < pre_counts[ATT_I]; pre_pre_count++) {
                 ADD_S(pre[ATT_I][pre_pre_count]);
             }
-            ADD_S(- (loop_lit));
+            ADD_S(-(loop_lit));
             TERM_CL;
         }
 
@@ -177,7 +176,7 @@ int main(__unused int argc, char *argv[]) {
             for (int lit = 1; lit < 2 * argcount + 1; lit++) {
                 breached_buff[lit - 1] = solver->val(lit);
             }
-            for (int signed_lit : breached_buff){
+            for (int signed_lit : breached_buff) {
                 solver->add(-signed_lit);
             }
             solver->add(0);
