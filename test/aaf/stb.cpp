@@ -111,12 +111,6 @@ int main(__unused int argc, char *argv[]) {
         solver->add(0);
     }
 
-    for (const auto &a : arg2lit) {
-        cout << a.first << " " << a.second << '\n';
-    }
-
-    cout << argcount << '\n';
-
     int sol_buff[argcount];
 
     while (solver->solve() == 10) {
@@ -127,10 +121,11 @@ int main(__unused int argc, char *argv[]) {
                     cout << '"' << lit2arg[lit];
                     first_out = false;
                 } else {
-                    cout << " " << lit2arg[lit];
+                    cout << ' ' << lit2arg[lit];
                 }
             }
         }
+        if (first_out) cout << '"';
         cout << "\"\n";
         for (int signed_lit : sol_buff) {
             solver->add(-signed_lit);
