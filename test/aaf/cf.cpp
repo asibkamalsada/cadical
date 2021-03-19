@@ -26,6 +26,8 @@ int main(__unused int argc, char *argv[]) {
 
     int argcount = 0;
 
+    bool args_finished = false;
+
     while (fin >> noskipws >> ch) {
         if (ch == 'a') {
             fin >> noskipws >> ch;
@@ -53,6 +55,10 @@ int main(__unused int argc, char *argv[]) {
                 if (ch == 't') {
                     fin >> noskipws >> ch;
                     if (ch == '(') {
+                        if (!args_finished) {
+                            args_finished = true;
+                            solver->reserve(argcount);
+                        }
                         int lit1;
                         int lit2;
                         fin >> noskipws >> ch;

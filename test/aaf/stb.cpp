@@ -62,6 +62,7 @@ int main(__unused int argc, char *argv[]) {
                     if (ch == '(') {
                         if (!args_finished) {
                             args_finished = true;
+                            solver->reserve(argcount);
                             pre_counts = (int *) calloc(argcount, sizeof(int));
                             for (int i = 0; i < argcount; i++) {
                                 pre[i] = new int[argcount];
